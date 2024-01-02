@@ -8,7 +8,6 @@ import {
   Animated,
 } from "react-native";
 import ScoreDisplay from "./scoredisplay";
-import Countdown from "./test/test";
 
 const BlackSquareGame = ({ setRound }) => {
   const [count, setCount] = useState(3);

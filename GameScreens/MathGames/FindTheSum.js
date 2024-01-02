@@ -1,9 +1,11 @@
-import { View, Text, StyleSheet } from "react-native";
-import React from "react";
+import { View, Text, StyleSheet, ImageBackground } from "react-native";
+import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-export default function FindTheSum() {
-   const [indexNumberArray, setIndexNumberArray] = useState(0);
+import Timer from "./Timer";
+import GuestNumberList from "./GuestNumberList";
+import GameTopBar from "../../components/GameTopBar";
+export default function FindTheSum({ navigation: { goBack } }) {
+  const [indexNumberArray, setIndexNumberArray] = useState(0);
   const [level, setLevel] = useState(1);
   const [score, setScore] = useState(0);
   const [start, setStart] = useState(false);
@@ -67,143 +69,144 @@ export default function FindTheSum() {
   }
   return (
     <SafeAreaView style={styles.container}>
-     <View style={styles.container}>
-      {gameOver ? (
-        <View
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-            marginBottom: 20,
-          }}
-        >
-          <Text
+      <GameTopBar goBack={goBack} />
+      <View style={styles.gameContainer}>
+        {gameOver ? (
+          <View
             style={{
-              fontSize: 30,
-              color: "red",
-              fontWeight: "bold",
+              alignItems: "center",
+              justifyContent: "center",
+              marginBottom: 20,
             }}
           >
-            Game Over!
-          </Text>
-          <Text
-            style={{
-              fontSize: 30,
-              color: "red",
-              fontWeight: "bold",
-              marginBottom: 40,
-            }}
-          >
-            Your Score:{score}
-          </Text>
-          <Text
-            style={{ fontSize: 30, color: "red", fontWeight: "bold" }}
-            onPress={() => BeginGame()}
-          >
-            Click here to Restart!
-          </Text>
-        </View>
-      ) : (
-        <>
-          {start ? (
-            <>
-              <ImageBackground
-                source={
-                  level == 1
-                    ? {
-                        uri: "https://i.pinimg.com/originals/3b/ef/27/3bef27693c812b4762a9f363231ad5d2.jpg",
-                      }
-                    : {
-                        uri: "https://w0.peakpx.com/wallpaper/433/86/HD-wallpaper-android-apps-929-app-gray-grey-icon-logo-minimal-neutral-pattern.jpg",
-                      }
-                }
-                resizeMode="cover"
-                style={{
-                  justifyContent: "center",
-                  height: 220,
-                  alignContent: "center",
-                  textAlign: "center",
-                  width: 415,
-                  paddingBottom: 20,
-                }}
-              >
-                <Text
+            <Text
+              style={{
+                fontSize: 30,
+                color: "red",
+                fontWeight: "bold",
+              }}
+            >
+              Game Over!
+            </Text>
+            <Text
+              style={{
+                fontSize: 30,
+                color: "red",
+                fontWeight: "bold",
+                marginBottom: 40,
+              }}
+            >
+              Your Score:{score}
+            </Text>
+            <Text
+              style={{ fontSize: 30, color: "red", fontWeight: "bold" }}
+              onPress={() => BeginGame()}
+            >
+              Click here to Restart!
+            </Text>
+          </View>
+        ) : (
+          <>
+            {start ? (
+              <>
+                <ImageBackground
+                  source={
+                    level == 1
+                      ? {
+                          uri: "https://i.pinimg.com/originals/3b/ef/27/3bef27693c812b4762a9f363231ad5d2.jpg",
+                        }
+                      : {
+                          uri: "https://w0.peakpx.com/wallpaper/433/86/HD-wallpaper-android-apps-929-app-gray-grey-icon-logo-minimal-neutral-pattern.jpg",
+                        }
+                  }
+                  resizeMode="cover"
                   style={{
-                    fontWeight: "bold",
-                    fontSize: 25,
-                    marginTop: 20,
+                    justifyContent: "center",
+                    height: 220,
+                    alignContent: "center",
                     textAlign: "center",
+                    width: 415,
+                    paddingBottom: 20,
                   }}
                 >
-                  Level:{level}
-                </Text>
-                <Timer
-                  time={time}
-                  gameOver={gameOver}
-                  setGameOver={setGameOver}
+                  <Text
+                    style={{
+                      fontWeight: "bold",
+                      fontSize: 25,
+                      marginTop: 20,
+                      textAlign: "center",
+                    }}
+                  >
+                    Level:{level}
+                  </Text>
+                  <Timer
+                    time={time}
+                    gameOver={gameOver}
+                    setGameOver={setGameOver}
+                  />
+                  <Text style={styles.header}>
+                    {level == 1 ? (
+                      <Text style={{ fontSize: 20, fontStyle: "italic" }}>
+                        Find two numbers whose sum equal to 10
+                      </Text>
+                    ) : (
+                      <Text style={{ fontSize: 20, fontStyle: "italic" }}>
+                        Find two numbers whose sum equal to 100
+                      </Text>
+                    )}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 30,
+                      color: "blue",
+                      fontWeight: "bold",
+                      textAlign: "center",
+                    }}
+                  >
+                    Score:{score}
+                  </Text>
+                </ImageBackground>
+                <View>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      fontWeight: "bold",
+                      fontStyle: "italic",
+                      color: "blue",
+                      paddingTop: 20,
+                    }}
+                  >
+                    Question: {indexNumberArray}/{numberLv1.length}, Correct
+                    Answer: {totalTrue}/{indexNumberArray}
+                  </Text>
+                </View>
+                <GuestNumberList
+                  numbers={
+                    level == 1
+                      ? numberLv1[indexNumberArray]
+                      : numberLv2[indexNumberArray]
+                  }
+                  indexNumberArray={indexNumberArray}
+                  score={score}
+                  setScore={setScore}
+                  setIndexNumberArray={setIndexNumberArray}
+                  totalTrue={totalTrue}
+                  setTotalTrue={setTotalTrue}
                 />
-                <Text style={styles.header}>
-                  {level == 1 ? (
-                    <Text style={{ fontSize: 20, fontStyle: "italic" }}>
-                      Find two numbers whose sum is a multiple-of-ten.
-                    </Text>
-                  ) : (
-                    <Text style={{ fontSize: 20, fontStyle: "italic" }}>
-                      Find two numbers whose sum is a multiple-of-hunderd
-                    </Text>
-                  )}
-                </Text>
+              </>
+            ) : (
+              <>
                 <Text
-                  style={{
-                    fontSize: 30,
-                    color: "blue",
-                    fontWeight: "bold",
-                    textAlign: "center",
-                  }}
+                  style={{ fontSize: 30, color: "red", fontWeight: "bold" }}
+                  onPress={() => BeginGame()}
                 >
-                  Score:{score}
+                  Start Game
                 </Text>
-              </ImageBackground>
-              <View>
-                <Text
-                  style={{
-                    fontSize: 20,
-                    fontWeight: "bold",
-                    fontStyle: "italic",
-                    color: "blue",
-                    paddingTop: 20,
-                  }}
-                >
-                  Question: {indexNumberArray}/{numberLv1.length}, Correct
-                  Answer: {totalTrue}/{indexNumberArray}
-                </Text>
-              </View>
-              <GuestNumberList
-                numbers={
-                  level == 1
-                    ? numberLv1[indexNumberArray]
-                    : numberLv2[indexNumberArray]
-                }
-                indexNumberArray={indexNumberArray}
-                score={score}
-                setScore={setScore}
-                setIndexNumberArray={setIndexNumberArray}
-                totalTrue={totalTrue}
-                setTotalTrue={setTotalTrue}
-              />
-            </>
-          ) : (
-            <>
-              <Text
-                style={{ fontSize: 30, color: "red", fontWeight: "bold" }}
-                onPress={() => BeginGame()}
-              >
-                Start Game
-              </Text>
-            </>
-          )}
-        </>
-      )}
-    </View>
+              </>
+            )}
+          </>
+        )}
+      </View>
     </SafeAreaView>
   );
 }
@@ -211,9 +214,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#F0FFF0",
+  },
+  gameContainer: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "center",
+    backgroundColor: "#F0FFF0",
+    alignItems: "center",
   },
   header: {
     fontSize: 18,
@@ -222,4 +231,3 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 });
-export default GuestNumber;

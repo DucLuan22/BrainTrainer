@@ -8,8 +8,11 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from "react-native";
-import ProductListItem from "../components/ProductListItem";
+import ProductListItem from "./ProductListItem";
+
 import { useNavigation } from "@react-navigation/native";
+import GameTopBar from "../../components/GameTopBar";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export const productLv1 = [
   {
@@ -126,7 +129,7 @@ export const productLv4 = [
   },
 ];
 
-export default function ShoppingGame() {
+export default function ShoppingGame({ navigation: { goBack } }) {
   const [score, setScore] = useState(0);
   const [level, setLevel] = useState(1);
   const [totalCorrect, setTotalCorrect] = useState(0);
@@ -192,7 +195,8 @@ export default function ShoppingGame() {
 
   if (level === 1) {
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
+        <GameTopBar goBack={goBack} />
         <View>
           <TouchableOpacity onPress={startGame}>
             <Text style={styles.start}>
@@ -313,7 +317,7 @@ export default function ShoppingGame() {
         >
           <Text>Number Guest</Text>
         </Pressable>
-      </View>
+      </SafeAreaView>
     );
   } else if (level == 2) {
     return (
@@ -754,7 +758,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
+
     justifyContent: "center",
     // backgroundColor: "#DCDCDC",
   },
