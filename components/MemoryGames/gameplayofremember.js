@@ -8,7 +8,6 @@ import {
   Animated,
 } from "react-native";
 import ScoreDisplay from "./scoredisplay";
-import Countdown from "./test/test";
 
 const BlackSquareGame = ({ setRound }) => {
   const [count, setCount] = useState(3);
@@ -81,12 +80,12 @@ const BlackSquareGame = ({ setRound }) => {
   };
   // condition for game win or lose
   const showAnnouncementLose = () => {
-    Alert.alert("loss", "Enter an item", [
+    Alert.alert("loss", "Ok to Reload this round an item", [
       { text: "OK", onPress: () => resetGame() },
     ]);
   };
   const showAnnouncementPass = () => {
-    Alert.alert("pass", "Enter an item", [
+    Alert.alert("pass", "Ok to next level", [
       { text: "OK", onPress: () => levelUp() },
     ]);
   };
