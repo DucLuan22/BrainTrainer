@@ -14,7 +14,7 @@ import HomeScreen from "./screens/HomeScreen";
 import FindMissingGame from "./GameScreens/MemoryGames/FindMissingGame";
 import AvoidDuplicationGame from "./GameScreens/MemoryGames/AvoidDuplicationGame";
 import FindTheOddOneOut from "./GameScreens/FocusGames/FindTheOddOneOut";
-import MatchingPair from "./GameScreens/FocusGames/MatchingPair";
+import MatchingPair from "./GameScreens/FocusGames/MatchingPair/component/MatchingPair";
 import CatchingFish from "./GameScreens/FocusGames/CatchingFish";
 import FindTheNextWord from "./GameScreens/LanguageGames/FindTheNextWord";
 import FindTheRemainingLetter from "./GameScreens/LanguageGames/FindTheRemainingLetter";
@@ -24,7 +24,7 @@ import FindTheSum from "./GameScreens/MathGames/FindTheSum";
 import ShoppingGame from "./GameScreens/MathGames/ShoppingGame";
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
-
+import {EasyLevel,MediumLevel,HardLevel,ScreenEnd} from './GameScreens/FocusGames/MatchingPair/component/index'
 function HomeTabStack() {
   return (
     <Tab.Navigator
@@ -100,6 +100,16 @@ export default function App() {
 
           <Stack.Screen name="find-sum" component={FindTheSum} />
           <Stack.Screen name="shopping-game" component={ShoppingGame} />
+
+
+          <Stack.Screen
+            name="ScreenEnd"
+            component={ScreenEnd}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen name="EasyLevel" component={EasyLevel} />
+          <Stack.Screen name="MediumLevel" component={MediumLevel} />
+          <Stack.Screen name="HardLevel" component={HardLevel} />
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>

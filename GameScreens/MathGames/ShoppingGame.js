@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from "react-native";
-import ProductListItem from "../components/ProductListItem";
+import ProductListItem from "./ProductListItem"
 import { useNavigation } from "@react-navigation/native";
 
 export const productLv1 = [
