@@ -19,9 +19,10 @@ import CatchingFish from "./GameScreens/FocusGames/CatchingFish";
 import FindTheNextWord from "./GameScreens/LanguageGames/FindTheNextWord";
 import FindTheRemainingLetter from "./GameScreens/LanguageGames/FindTheRemainingLetter";
 import LinkWords from "./GameScreens/LanguageGames/LinkWords";
-import ScrambledWords from "./GameScreens/LanguageGames/ScrambledWords";
+import ScrambledWords from "./GameScreens/LanguageGames/ScambledWord/components/ScrambledWords";
 import FindTheSum from "./GameScreens/MathGames/FindTheSum";
 import ShoppingGame from "./GameScreens/MathGames/ShoppingGame";
+import {EasyLevel,MediumLevel,HardLevel,ScreenEnd} from './GameScreens/LanguageGames/ScambledWord/components/index'
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
@@ -100,6 +101,18 @@ export default function App() {
 
           <Stack.Screen name="find-sum" component={FindTheSum} />
           <Stack.Screen name="shopping-game" component={ShoppingGame} />
+
+          <Stack.Screen
+            name="ScreenEndScrambledWords"
+            component={ScreenEnd}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen name="EasyLevelScrambledWords" component={EasyLevel} />
+          <Stack.Screen
+            name="MediumLevelScrambledWords"
+            component={MediumLevel}
+          />
+          <Stack.Screen name="HardLevelScrambledWords" component={HardLevel} />
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>
