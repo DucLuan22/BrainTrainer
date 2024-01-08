@@ -16,15 +16,24 @@ import AvoidDuplicationGame from "./GameScreens/MemoryGames/AvoidDuplicationGame
 import FindTheOddOneOut from "./GameScreens/FocusGames/FindTheOddOneOut";
 import MatchingPair from "./GameScreens/FocusGames/MatchingPair/component/MatchingPair";
 import CatchingFish from "./GameScreens/FocusGames/CatchingFish";
-import FindTheNextWord from "./GameScreens/LanguageGames/FindTheNextWord";
 import FindTheRemainingLetter from "./GameScreens/LanguageGames/FindTheRemainingLetter";
 import LinkWords from "./GameScreens/LanguageGames/LinkWords";
-import ScrambledWords from "./GameScreens/LanguageGames/ScrambledWords";
 import FindTheSum from "./GameScreens/MathGames/FindTheSum";
 import ShoppingGame from "./GameScreens/MathGames/ShoppingGame";
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
-import {EasyLevel,MediumLevel,HardLevel,ScreenEnd} from './GameScreens/FocusGames/MatchingPair/component/index'
+import {
+  EasyLevel,
+  MediumLevel,
+  HardLevel,
+  ScreenEnd,
+} from "./GameScreens/FocusGames/MatchingPair/component/index";
+import { MediumScrambleLevel } from "./GameScreens/LanguageGames/ScambledWord/components/MediumScrambleLevel";
+import { EasyScrambleLevel } from "./GameScreens/LanguageGames/ScambledWord/components/EasyScrambleLevel";
+import { HardScrambleLevel } from "./GameScreens/LanguageGames/ScambledWord/components/HardScrambleLevel";
+import { ScreenScrambleEnd } from "./GameScreens/LanguageGames/ScambledWord/components/ScreenScrambleEnd";
+import ScrambledWords from "./GameScreens/LanguageGames/ScambledWord/components/ScrambledWords";
+import FindTheNextWord from "./GameScreens/LanguageGames/ScambledWord/components/FindTheNextWord";
 function HomeTabStack() {
   return (
     <Tab.Navigator
@@ -101,7 +110,6 @@ export default function App() {
           <Stack.Screen name="find-sum" component={FindTheSum} />
           <Stack.Screen name="shopping-game" component={ShoppingGame} />
 
-
           <Stack.Screen
             name="ScreenEnd"
             component={ScreenEnd}
@@ -110,6 +118,24 @@ export default function App() {
           <Stack.Screen name="EasyLevel" component={EasyLevel} />
           <Stack.Screen name="MediumLevel" component={MediumLevel} />
           <Stack.Screen name="HardLevel" component={HardLevel} />
+
+          <Stack.Screen
+            name="ScreenEndScrambledWords"
+            component={ScreenScrambleEnd}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="EasyLevelScrambledWords"
+            component={EasyScrambleLevel}
+          />
+          <Stack.Screen
+            name="MediumLevelScrambledWords"
+            component={MediumScrambleLevel}
+          />
+          <Stack.Screen
+            name="HardLevelScrambledWords"
+            component={HardScrambleLevel}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>
