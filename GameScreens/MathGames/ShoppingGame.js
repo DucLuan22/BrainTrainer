@@ -9,7 +9,6 @@ import {
   ImageBackground,
 } from "react-native";
 import ProductListItem from "./ProductListItem";
-
 import { useNavigation } from "@react-navigation/native";
 import GameTopBar from "../../components/GameTopBar";
 import { SafeAreaView } from "react-native-safe-area-context";
