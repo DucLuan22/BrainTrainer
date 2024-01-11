@@ -11,7 +11,10 @@ import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import GameTopBar from "../../components/GameTopBar";
 
-export default function FindMissingGame({ navigation: { goBack } }) {
+export default function FindMissingGame({
+  navigation: { goBack },
+  navigation,
+}) {
   const images = [
     require("../../assets/animal/images(1).jpeg"),
     require("../../assets/animal/images(2).jpeg"),
@@ -247,8 +250,16 @@ export default function FindMissingGame({ navigation: { goBack } }) {
       JSON.stringify(sortedRandomImageID) ===
       JSON.stringify(sortedSelectedOptions);
 
-    if (round < 11) {
-      setPoint(point + result ? 200 : 0);
+    if (result) {
+      if (round >= 1 && round <= 4) {
+        setPoint(point + 200);
+      } else if (round >= 5 && round <= 8) {
+        setPoint(point + 400);
+      } else if (round >= 9 && round <= 10) {
+        setPoint(point + 600);
+      }
+    }
+    if (round <= 9) {
       resetStates();
       setSecondCountdownFinished(false);
       handleNext();
@@ -256,29 +267,7 @@ export default function FindMissingGame({ navigation: { goBack } }) {
     }
 
     if (round === 10) {
-      Alert.alert(
-        "Game Over",
-        `You've reached the final round. Your Score is ${point}. Would you like to try again?`,
-        [
-          {
-            text: "Try Again",
-            onPress: () => {
-              resetStates();
-              setRound(1);
-              setIsGameOver(false);
-              setPoint(0);
-            },
-          },
-          {
-            text: "Exit",
-            onPress: () => {
-              goBack();
-            },
-            style: "cancel",
-          },
-        ],
-        { cancelable: false }
-      );
+      navigation.navigate("ScreenEnd", { points: point });
     }
   };
 
@@ -378,7 +367,7 @@ export default function FindMissingGame({ navigation: { goBack } }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f0f0f0", // Change to your preferred background color
+    backgroundColor: "#f0f0f0",
     paddingHorizontal: 20,
     paddingTop: 20,
     paddingBottom: 10,

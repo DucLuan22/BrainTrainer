@@ -16,10 +16,78 @@ const words = [
   "cake stand",
   "stand up",
   "up town",
-  "",
+  "town square",
+  "square dance",
+  "dance floor",
+  "floor plan",
+  "plan ahead",
+  "ahead start",
+  "start line",
+  "line break",
+  "break point",
+  "point guard",
+  "guard dog",
+  "dog house",
+  "house party",
+  "party favor",
+  "favor bag",
+  "bag pack",
+  "pack lunch",
+  "lunch break",
+  "break time",
+  "time travel",
+  "travel guide",
+  "guide book",
+  "book club",
+  "club house",
+  "house warming",
+  "warming trend",
+  "trend setter",
+  "setter point",
+  "point blank",
+  "blank slate",
+  "slate clean",
+  "clean energy",
+  "energy boost",
+  "boost morale",
+  "morale high",
+  "high five",
+  "five star",
+  "star gazing",
+  "gazing sky",
+  "sky diving",
+  "diving board",
+  "board game",
+  "game night",
+  "night owl",
+  "owl hoot",
+  "hoot owl",
+  "owl eyes",
+  "eyes wide",
+  "wide open",
+  "open sesame",
+  "sesame street",
+  "street sign",
+  "sign post",
+  "post office",
+  "office space",
+  "space station",
+  "station master",
+  "master key",
+  "key holder",
+  "holder cup",
+  "cup of tea",
+  "tea time",
+  "time machine",
+  "machine learning",
+  "learning curve",
+  "curve ball",
+  "ball game",
+  "game over",
+  "over time",
 ];
 
-const LinkWords = ({ navigation: { goBack } }) => {
+const LinkWords = ({ navigation: { goBack }, navigation }) => {
   const initialWord = "butter";
   const [data, setData] = useState(words);
   const [inputWord, setInputWord] = useState("");
@@ -38,9 +106,7 @@ const LinkWords = ({ navigation: { goBack } }) => {
     } else {
       clearInterval(countdown);
       // Game over logic - show an alert
-      Alert.alert("Game Over", `Your final score: ${points}`, [
-        { text: "OK", onPress: () => goBack() },
-      ]);
+      navigation.navigate("ScreenEnd", { points: points });
     }
 
     return () => clearInterval(countdown);

@@ -63,12 +63,12 @@ function HomeScreen({ navigation }) {
       nav: navigation,
       games: [
         {
-          name: "Find The Next Word",
+          name: "Find The Remaining Letter",
           thumbnail: require("../assets/game-thumbnails/begin-word.png"),
           navigationTarget: "find-next-word",
         },
         {
-          name: "Find The Remaining Letters",
+          name: "Find The Next Words",
           thumbnail: require("../assets/game-thumbnails/find-next.png"),
           navigationTarget: "find-remain-letter",
         },

@@ -99,6 +99,8 @@ export default dataset = [
       "begot",
       "begat",
     ],
+  },
+  {
     mag: [
       "magistrate",
       "magistracy",
@@ -198,6 +200,8 @@ export default dataset = [
       "mage",
       "mags",
     ],
+  },
+  {
     spi: [
       "spine",
       "spite",
