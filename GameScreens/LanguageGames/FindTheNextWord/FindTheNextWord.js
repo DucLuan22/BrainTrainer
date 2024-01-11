@@ -9,22 +9,139 @@ import {
   View,
 } from "react-native";
 import { useState, useEffect } from "react";
-import dataset  from "./FindTheNextWord/dataset";
 export default function FindTheNextWord({ navigation: { goBack }, navigation }) {
   const [randomIndex, setRandomIndex] = useState(0);
-  const wordList = ["beg", "mag", "spi", "col"];
+  const wordList = ["spi", "col"];
   const [currentWord, setCurrentWord] = useState(wordList[0]);
   const [chosenword, setChosen] = useState([]);
   const [nextWord, setNextWord] = useState("");
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState("");
-  const [timeEnd, setTimeEnd] = useState(5);
-  const [showChat, setShowChat] = useState(false);
+
   useEffect(() => {
     a = Math.floor(Math.random() * wordList.length);
     setRandomIndex(a);
     setCurrentWord(wordList[a]);
   }, []);
+  const dataset = [
+    {
+      spi: [
+        "spine",
+        "spite",
+        "spike",
+        "spill",
+        "spice",
+        "spicy",
+        "spies",
+        "spire",
+        "spied",
+        "spiky",
+        "spilt",
+        "spiny",
+        "spiel",
+        "spitz",
+        "spiff",
+        "spick",
+        "spica",
+        "spirt",
+        "spile",
+        "spiks",
+        "spier",
+        "spics",
+        "spins",
+        "spiry",
+        "spivs",
+        "spits",
+      ],
+    },
+    {
+      col: [
+        "column",
+        "colour",
+        "collar",
+        "colony",
+        "collie",
+        "collet",
+        "coleus",
+        "collop",
+        "colugo",
+        "colure",
+        "colzas",
+        "colter",
+        "colors",
+        "colobi",
+        "colons",
+        "cologs",
+        "colone",
+        "coloni",
+        "colead",
+        "colder",
+        "coldly",
+        "colbys",
+        "colins",
+        "colies",
+        "colics",
+        "color",
+        "colon",
+        "colic",
+        "colza",
+        "colts",
+        "coles",
+        "coled",
+        "colby",
+        "colas",
+        "colds",
+        "colin",
+        "colog",
+        "colly",
+        "cold",
+        "cole",
+        "cola",
+        "colt",
+        "coly",
+        "cols",
+        "college",
+        "collect",
+        "collins",
+        "colonel",
+        "cologne",
+        "colitis",
+        "collier",
+        "collage",
+        "colored",
+        "collide",
+        "colleen",
+        "collate",
+        "collard",
+        "collude",
+        "colloid",
+        "colobus",
+        "colones",
+        "coltish",
+        "colossi",
+        "colicin",
+        "colicky",
+        "colitic",
+        "collars",
+        "coldish",
+        "coldest",
+        "coleads",
+        "colonic",
+        "colorer",
+        "colonus",
+        "collops",
+        "collets",
+        "collied",
+        "collies",
+        "colours",
+        "colters",
+        "colugos",
+        "columel",
+        "columns",
+        "colures",
+      ],
+    },
+  ];
   const checkAnswer = () => {
     const chosen = chosenword.includes(currentWord + nextWord);
     const isCorrect = dataset[randomIndex][currentWord].includes(
@@ -42,7 +159,8 @@ export default function FindTheNextWord({ navigation: { goBack }, navigation }) 
     showChatMessage();
     setNextWord("");
   };
-
+  const [timeEnd, setTimeEnd] = useState(300);
+  const [showChat, setShowChat] = useState(false);
   const showChatMessage = () => {
     setShowChat(true);
     setTimeout(() => {
@@ -53,14 +171,11 @@ export default function FindTheNextWord({ navigation: { goBack }, navigation }) 
     setTimeout(() => {
       setTimeEnd(timeEnd - 1);
     }, 1000);
-    if(timeEnd  < 1){
-      navigation.navigate("ScreenEnd", { points: score });
-    }
   }, [timeEnd]);
   return (
     <SafeAreaView style={styles.container}>
       <GameTopBar goBack={goBack} />
-      <View style={{display: 'flex', alignItems: 'center',fontSize: 30}}>
+      <View>
         <Text>{timeEnd}</Text>
       </View>
       <View
