@@ -9,8 +9,11 @@ import {
   View,
 } from "react-native";
 import { useState, useEffect } from "react";
-import dataset  from "./FindTheNextWord/dataset";
-export default function FindTheNextWord({ navigation: { goBack }, navigation }) {
+import dataset from "./FindTheNextWord/dataset";
+export default function FindTheNextWord({
+  navigation: { goBack },
+  navigation,
+}) {
   const [randomIndex, setRandomIndex] = useState(0);
   const wordList = ["beg", "mag", "spi", "col"];
   const [currentWord, setCurrentWord] = useState(wordList[0]);
@@ -18,7 +21,7 @@ export default function FindTheNextWord({ navigation: { goBack }, navigation }) 
   const [nextWord, setNextWord] = useState("");
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState("");
-  const [timeEnd, setTimeEnd] = useState(5);
+  const [timeEnd, setTimeEnd] = useState(100);
   const [showChat, setShowChat] = useState(false);
   useEffect(() => {
     a = Math.floor(Math.random() * wordList.length);
@@ -53,14 +56,14 @@ export default function FindTheNextWord({ navigation: { goBack }, navigation }) 
     setTimeout(() => {
       setTimeEnd(timeEnd - 1);
     }, 1000);
-    if(timeEnd  < 1){
+    if (timeEnd < 1) {
       navigation.navigate("ScreenEnd", { points: score });
     }
   }, [timeEnd]);
   return (
     <SafeAreaView style={styles.container}>
       <GameTopBar goBack={goBack} />
-      <View style={{display: 'flex', alignItems: 'center',fontSize: 30}}>
+      <View style={{ display: "flex", alignItems: "center", fontSize: 30 }}>
         <Text>{timeEnd}</Text>
       </View>
       <View
@@ -123,8 +126,5 @@ export default function FindTheNextWord({ navigation: { goBack }, navigation }) 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    backgroundColor: "#ecf0f1",
-    padding: 8,
   },
 });

@@ -33,7 +33,8 @@ import { EasyScrambleLevel } from "./GameScreens/LanguageGames/ScambledWord/comp
 import { HardScrambleLevel } from "./GameScreens/LanguageGames/ScambledWord/components/HardScrambleLevel";
 import { ScreenScrambleEnd } from "./GameScreens/LanguageGames/ScambledWord/components/ScreenScrambleEnd";
 import ScrambledWords from "./GameScreens/LanguageGames/ScambledWord/components/ScrambledWords";
-import FindTheNextWord from "./GameScreens/LanguageGames/ScambledWord/components/FindTheNextWord";
+import FindTheNextWord from "./GameScreens/LanguageGames/FindTheNextWord";
+
 function HomeTabStack() {
   return (
     <Tab.Navigator

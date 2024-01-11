@@ -80,10 +80,8 @@ export default function FindMissingGame({ navigation: { goBack } }) {
       uniqueSet.add(randomNumber);
     }
 
-    // Convert the Set back to an array
     const uniqueArray = Array.from(uniqueSet);
 
-    // Shuffle the array using Fisher-Yates algorithm
     for (let i = uniqueArray.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [uniqueArray[i], uniqueArray[j]] = [uniqueArray[j], uniqueArray[i]];
@@ -249,8 +247,8 @@ export default function FindMissingGame({ navigation: { goBack } }) {
       JSON.stringify(sortedRandomImageID) ===
       JSON.stringify(sortedSelectedOptions);
 
-    if (result && round < 11) {
-      setPoint(point + 200);
+    if (round < 11) {
+      setPoint(point + result ? 200 : 0);
       resetStates();
       setSecondCountdownFinished(false);
       handleNext();
@@ -258,7 +256,6 @@ export default function FindMissingGame({ navigation: { goBack } }) {
     }
 
     if (round === 10) {
-      // End the game here and display an alert
       Alert.alert(
         "Game Over",
         `You've reached the final round. Your Score is ${point}. Would you like to try again?`,
