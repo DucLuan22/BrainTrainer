@@ -18,7 +18,7 @@ export default function FindTheNextWord({ navigation: { goBack }, navigation }) 
   const [nextWord, setNextWord] = useState("");
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState("");
-  const [timeEnd, setTimeEnd] = useState(5);
+  const [timeEnd, setTimeEnd] = useState(300);
   const [showChat, setShowChat] = useState(false);
   useEffect(() => {
     a = Math.floor(Math.random() * wordList.length);
