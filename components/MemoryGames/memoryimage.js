@@ -92,7 +92,7 @@ export default function MemoryImages({ setRound }) {
         setmemorySquare(newMemory);
         console.log(memorySquare);
         setLevel(level + 1);
-        setScore(score + 100);
+        setScore(score + 500);
         setCurrentLevel(currentLevel + 1);
       }
     } catch (error) {
