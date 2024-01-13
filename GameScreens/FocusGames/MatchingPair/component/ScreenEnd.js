@@ -22,7 +22,7 @@ export function ScreenEnd({ route, navigation }) {
       </View>
       <View style={styles.headerText}>
         <Text style={styles.customText}>Point: {route.params.points}</Text>
-        <Text style={styles.customText}>Time Remaining: {time}</Text>
+        <Text style={styles.customText}>Time Remaining: {route.params.time}</Text>
       </View>
       <View style={{ paddingTop: 50 }}>
         <TouchableOpacity

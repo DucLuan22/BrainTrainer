@@ -76,10 +76,22 @@ export function EasyLevel({ navigation }) {
   };
 
   const isNext = initialBoxes.every((item) => item.isDead);
+  const [timeEnd,setTimeEnd] = useState(300)
+  useEffect(() => {
+        const countdown = setInterval(() => {
+          setTimeEnd((prevTime) => prevTime - 1);
+        }, 1000);
 
+        if (timeEnd < 1) {
+          clearInterval(countdown);
+          navigation.navigate("ScreenEnd", { points: points,time:timeEnd });
+        }
+
+        return () => clearInterval(countdown);
+  }, [timeEnd]);
   useEffect(() => {
     if (level == 4) {
-      navigation.navigate("ScreenEnd", { points: points });
+      navigation.navigate("ScreenEnd", { points: points, time: timeEnd });
     }
   }, [level]);
   if (isNext && level == 1) {
@@ -124,6 +136,7 @@ export function EasyLevel({ navigation }) {
         }}
       >
         <Text style={styles.scoreText}>Score: {points}</Text>
+        <Text style={{alignSelf:"center"}}>Time: {timeEnd}</Text>
       </View>
 
       <View style={styles.container}>
@@ -177,7 +190,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   selectedBox: {
-    backgroundColor: "black",
+    borderColor: "red",
+    borderWidth: 2,
   },
   scoreText: {
     fontSize: 50,

@@ -20,7 +20,7 @@ export function ScreenScrambleEnd({ route, navigation }) {
       </View>
       <View style={styles.headerText}>
         <Text style={styles.customText}>Điểm: {route.params.score}</Text>
-        <Text style={styles.customText}>Thời gian: {time}</Text>
+        <Text style={styles.customText}>Thời gian: {route.params.time}</Text>
       </View>
       <View style={{ paddingTop: 50 }}>
         <TouchableOpacity

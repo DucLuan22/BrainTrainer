@@ -75,11 +75,23 @@ const [level, setLevel] = useState(1);
 const isNext = initialBoxes.every((item) => item.isDead);
 
 
+ const [timeEnd, setTimeEnd] = useState(30);
+ useEffect(() => {
+   const countdown = setInterval(() => {
+     setTimeEnd((prevTime) => prevTime - 1);
+   }, 1000);
 
+   if (timeEnd < 1) {
+     clearInterval(countdown);
+     navigation.navigate("ScreenEnd", { points: points, time: timeEnd });
+   }
+
+   return () => clearInterval(countdown);
+ }, [timeEnd]);
 
   useEffect(() => {
     if (level == 4) {
-    return navigation.navigate("ScreenEnd", { points: points });}
+    return navigation.navigate("ScreenEnd", { points: points, time: timeEnd });}
   }, [level]);
 if (isNext && level == 1) {
   setInitialBoxes(
@@ -143,6 +155,7 @@ if (isNext && level == 1) {
         }}
       >
         <Text style={styles.scoreText}>Score: {points}</Text>
+        <Text style={{ alignSelf: "center" }}>Time: {timeEnd}</Text>
       </View>
 
       <View style={styles.container}>
@@ -197,7 +210,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   selectedBox: {
-    backgroundColor: "gray",
+    borderColor: "red",
+    borderWidth: 2,
   },
   scoreText: {
     fontSize: 50,

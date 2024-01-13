@@ -8,7 +8,7 @@ import {
   SafeAreaView,
   Box,
 } from "react-native";
-
+import GameTopBar from "../../../../components/GameTopBar";
 const wordsData = [
   {
     word: "addition",
@@ -56,7 +56,7 @@ class BoxContent {
   }
 }
 
-export const EasyScrambleLevel = ({ navigation }) => {
+export const EasyScrambleLevel = ({ navigation, navigation: { goBack } }) => {
   const [currentWord, setCurrentWord] = useState("a");
   const [shuffledWord, setShuffledWord] = useState("");
   const [selectedLetters, setSelectedLetters] = useState([]);
@@ -97,9 +97,25 @@ export const EasyScrambleLevel = ({ navigation }) => {
       // setSelectedLetters([]);
       // setOrderedSelectedLetters([]);
     } else {
-      navigation.navigate("ScreenEndScrambledWords", { score: score });
+      navigation.navigate("ScreenEndScrambledWords", {
+        score: score,
+        time: timeEnd,
+      });
     }
   };
+  const [timeEnd, setTimeEnd] = useState(300);
+  useEffect(() => {
+    const countdown = setInterval(() => {
+      setTimeEnd((prevTime) => prevTime - 1);
+    }, 1000);
+
+    if (timeEnd < 1) {
+      clearInterval(countdown);
+      navigation.navigate("ScreenEnd", { score: score, time: timeEnd });
+    }
+
+    return () => clearInterval(countdown);
+  }, [timeEnd]);
 
   useEffect(() => {
     const checkAnswer = () => {
@@ -132,6 +148,7 @@ export const EasyScrambleLevel = ({ navigation }) => {
 
   return (
     <SafeAreaView>
+      <GameTopBar goBack={goBack} />
       <View
         style={{
           height: 150,
@@ -142,6 +159,7 @@ export const EasyScrambleLevel = ({ navigation }) => {
         }}
       >
         <Text style={styles.scoreText}> Score: {score}</Text>
+        <Text style={{ alignSelf: "center" }}>Time: {timeEnd}</Text>
       </View>
       <View style={styles.container}>
         <View style={styles.wordContainer}>
