@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import ScoreDisplay from "./scoredisplay";
 
-const BlackSquareGame = ({ setRound }) => {
+const BlackSquareGame = ({ setRound, round }) => {
   const [count, setCount] = useState(3);
   const animatedValue = new Animated.Value(0);
 
@@ -80,19 +80,21 @@ const BlackSquareGame = ({ setRound }) => {
   };
   // condition for game win or lose
   const showAnnouncementLose = () => {
-    Alert.alert("loss", "Ok to Reload this round an item", [
-      { text: "OK", onPress: () => resetGame() },
-    ]);
+    Alert.alert(
+      `Round ${round} answer is incorrect`,
+      "Press 'OK' to redo the level",
+      [{ text: "OK", onPress: () => resetGame() }]
+    );
   };
   const showAnnouncementPass = () => {
-    Alert.alert("pass", "Ok to next level", [
+    Alert.alert(`Round ${round} answer is Correct`, "Press 'OK' to move on", [
       { text: "OK", onPress: () => levelUp() },
     ]);
   };
 
   const CheckPassLevel = (level) => {
     let passVal = 0;
-    console.log(`check Pass level:${currentLevel}`);
+    // console.log(`check Pass level:${currentLevel}`);
     squares.map((e) => {
       if (e.color === "#243bad") {
         passVal++;

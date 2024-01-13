@@ -10,7 +10,7 @@ export default function AvoidDuplicationGame({ navigation: { goBack } }) {
   }, [round]);
   return (
     <SafeAreaView style={styles.container}>
-      <GameTopBar goBack={goBack} text={"Round :" + round} />
+      <GameTopBar goBack={goBack} text={"Round:" + round} />
       <View style={styles.GamePlay}>
         <MemoryImages setRound={setRound} />
       </View>

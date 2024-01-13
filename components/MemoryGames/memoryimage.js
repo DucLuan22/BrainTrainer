@@ -72,7 +72,7 @@ export default function MemoryImages({ setRound }) {
   };
   // condition for game win or lose
   const showAnnouncementLose = () => {
-    Alert.alert("loss", "Restart the Game", [
+    Alert.alert("Game Over", "Press 'OK' to Restart the Game", [
       { text: "OK", onPress: () => resetGame() },
     ]);
   };

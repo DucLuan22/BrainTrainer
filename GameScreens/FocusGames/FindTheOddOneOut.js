@@ -11,7 +11,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import GameTopBar from "../../components/GameTopBar";
 
 export default function FindTheOddOneOut({ navigation: { goBack } }) {
-  const timerValue = 3000;
+  const timerValue = 15;
   const [isCircleClicked, setIsCircleClicked] = useState(false);
   const [circleEnabled, setCircleEnabled] = useState(true);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -66,7 +66,7 @@ export default function FindTheOddOneOut({ navigation: { goBack } }) {
       setIsCircleClicked(true);
       setCircleEnabled(false);
 
-      setPoints((prevPoints) => prevPoints + 100); // Add 100 points on click
+      setPoints((prevPoints) => prevPoints + 200); // Add 100 points on click
       setTimer(timerValue); // Reset timer to initial value
       setTimeout(() => {
         setCurrentImageIndex((prevIndex) =>

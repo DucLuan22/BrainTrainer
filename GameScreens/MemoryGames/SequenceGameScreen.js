@@ -12,7 +12,7 @@ export default function SequenceGameScreen({ navigation: { goBack } }) {
     <SafeAreaView style={styles.container}>
       <GameTopBar goBack={goBack} text={"Round :" + round} />
       <View style={styles.GamePlay}>
-        <BlackSquareGame setRound={setRound} />
+        <BlackSquareGame setRound={setRound} round={round} />
       </View>
     </SafeAreaView>
   );
