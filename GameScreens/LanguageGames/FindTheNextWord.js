@@ -16,7 +16,7 @@ export default function FindTheNextWord({
   const [nextWord, setNextWord] = useState("");
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState("");
-  const [timeEnd, setTimeEnd] = useState(30);
+  const [timeEnd, setTimeEnd] = useState(120);
   const [showChat, setShowChat] = useState(false);
 
   // Function to randomize the word index
@@ -43,7 +43,7 @@ export default function FindTheNextWord({
     } else if (isCorrect) {
       setChosen([...chosenword, currentWord + nextWord]);
       setFeedback("Correct! The word is in the list.");
-      setScore(score + 100);
+      setScore(score + 200);
     } else {
       setFeedback("Incorrect. The word is not in the list.");
     }
