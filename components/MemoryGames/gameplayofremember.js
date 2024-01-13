@@ -13,7 +13,7 @@ const BlackSquareGame = ({ setRound }) => {
   const [count, setCount] = useState(3);
   const animatedValue = new Animated.Value(0);
 
-  const levelGrid = [6, 9, 12, 16, 20];
+  const levelGrid = [6, 9, 12, 16, 20, 20, 25];
   // const dispatch = useDispatch();
   const initLevel = 0;
   const [score, setScore] = useState(initLevel);
@@ -33,7 +33,7 @@ const BlackSquareGame = ({ setRound }) => {
 
   // count score
   const handleIncrement = () => {
-    setScore(score + 100);
+    setScore(score + 200);
   };
   // fun to set value
   const levelUp = () => {
@@ -50,7 +50,7 @@ const BlackSquareGame = ({ setRound }) => {
     const maxRange = levelGrid[level] - 1;
     const newRandomNumbers = [];
     // init create a square to remember
-    while (newRandomNumbers.length < levelGrid[level] / 3) {
+    while (newRandomNumbers.length < level + 1) {
       const newRandom = getRandomNumber(minRange, maxRange, newRandomNumbers);
       newRandomNumbers.push(newRandom);
     }
@@ -80,12 +80,12 @@ const BlackSquareGame = ({ setRound }) => {
   };
   // condition for game win or lose
   const showAnnouncementLose = () => {
-    Alert.alert("loss", "Enter an item", [
+    Alert.alert("loss", "Ok to Reload this round an item", [
       { text: "OK", onPress: () => resetGame() },
     ]);
   };
   const showAnnouncementPass = () => {
-    Alert.alert("pass", "Enter an item", [
+    Alert.alert("pass", "Ok to next level", [
       { text: "OK", onPress: () => levelUp() },
     ]);
   };
@@ -99,7 +99,7 @@ const BlackSquareGame = ({ setRound }) => {
       }
     });
 
-    if (passVal == level + 2) {
+    if (passVal == level + 1) {
       return true;
     } else {
       return false;

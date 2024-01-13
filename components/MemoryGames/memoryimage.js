@@ -72,7 +72,7 @@ export default function MemoryImages({ setRound }) {
   };
   // condition for game win or lose
   const showAnnouncementLose = () => {
-    Alert.alert("loss", "Enter an item", [
+    Alert.alert("loss", "Restart the Game", [
       { text: "OK", onPress: () => resetGame() },
     ]);
   };
@@ -92,7 +92,7 @@ export default function MemoryImages({ setRound }) {
         setmemorySquare(newMemory);
         console.log(memorySquare);
         setLevel(level + 1);
-        setScore(score + 100);
+        setScore(score + 500);
         setCurrentLevel(currentLevel + 1);
       }
     } catch (error) {
