@@ -16,7 +16,9 @@ export default function FindTheNextWord({
   const [nextWord, setNextWord] = useState("");
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState("");
+
   const [timeEnd, setTimeEnd] = useState(120);
+
   const [showChat, setShowChat] = useState(false);
 
   // Function to randomize the word index
