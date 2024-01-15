@@ -30,20 +30,22 @@ export function MediumLevel({ navigation }) {
     }
     return arr;
   }
-  const [initialBoxes, setInitialBoxes] = useState(fisherYatesShuffle([
-    new BoxContent("A"),
-    new BoxContent("B"),
-    new BoxContent("A"),
-    new BoxContent("C"),
-    new BoxContent("B"),
-    new BoxContent("C"),
-    new BoxContent("A"),
-    new BoxContent("B"),
-    new BoxContent("A"),
-    new BoxContent("C"),
-    new BoxContent("B"),
-    new BoxContent("C"),
-  ]));
+  const [initialBoxes, setInitialBoxes] = useState(
+    fisherYatesShuffle([
+      new BoxContent("A"),
+      new BoxContent("B"),
+      new BoxContent("A"),
+      new BoxContent("C"),
+      new BoxContent("B"),
+      new BoxContent("C"),
+      new BoxContent("A"),
+      new BoxContent("B"),
+      new BoxContent("A"),
+      new BoxContent("C"),
+      new BoxContent("B"),
+      new BoxContent("C"),
+    ])
+  );
   const [selectedBoxIndex, setSelectedBoxIndex] = useState(null);
   const [points, setPoints] = useState(0);
   const onClick = (index) => {
@@ -72,63 +74,79 @@ export function MediumLevel({ navigation }) {
   const [level, setLevel] = useState(1);
   const isNext = initialBoxes.every((item) => item.isDead);
 
-  
-  
-  
-    useEffect(() => {
-      if (level == 4) {
-      return navigation.navigate("ScreenEnd", { points: points });}
-    }, [level]);
-    if (isNext && level == 1) {
-      setInitialBoxes(fisherYatesShuffle([
-          new BoxContent("A"),
-          new BoxContent("B"),
-          new BoxContent("A"),
-          new BoxContent("C"),
-          new BoxContent("B"),
-          new BoxContent("C"),
-          new BoxContent("A"),
-          new BoxContent("B"),
-          new BoxContent("A"),
-          new BoxContent("C"),
-          new BoxContent("B"),
-          new BoxContent("C"),
-          new BoxContent("D"),
-          new BoxContent("D"),
-          new BoxContent("I"),
-          new BoxContent("I"),
-        ])
-      );
-      setLevel(2);
-    } else if (isNext && level == 2) {
-      setInitialBoxes(
-        fisherYatesShuffle([
-          new BoxContent("A"),
-          new BoxContent("B"),
-          new BoxContent("A"),
-          new BoxContent("C"),
-          new BoxContent("B"),
-          new BoxContent("C"),
-          new BoxContent("A"),
-          new BoxContent("B"),
-          new BoxContent("A"),
-          new BoxContent("C"),
-          new BoxContent("B"),
-          new BoxContent("C"),
-          new BoxContent("K"),
-          new BoxContent("K"),
-          new BoxContent("G"),
-          new BoxContent("K"),
-          new BoxContent("K"),
-          new BoxContent("E"),
-          new BoxContent("G"),
-          new BoxContent("E"),
-        ])
-      );
-      setLevel(3);
-    }  else if(isNext && level == 3){
-      setLevel(4)
+  const [timeEnd, setTimeEnd] = useState(20);
+  useEffect(() => {
+    const countdown = setInterval(() => {
+      setTimeEnd((prevTime) => prevTime - 1);
+    }, 1000);
+
+    if (timeEnd < 1) {
+      clearInterval(countdown);
+      navigation.navigate("ScreenEnd", { points: points, time: timeEnd });
     }
+
+    return () => clearInterval(countdown);
+  }, [timeEnd]);
+
+  useEffect(() => {
+    if (level == 4) {
+      return navigation.navigate("ScreenEnd", {
+        points: points,
+        time: timeEnd,
+      });
+    }
+  }, [level]);
+  if (isNext && level == 1) {
+    setInitialBoxes(
+      fisherYatesShuffle([
+        new BoxContent("A"),
+        new BoxContent("B"),
+        new BoxContent("A"),
+        new BoxContent("C"),
+        new BoxContent("B"),
+        new BoxContent("C"),
+        new BoxContent("A"),
+        new BoxContent("B"),
+        new BoxContent("A"),
+        new BoxContent("C"),
+        new BoxContent("B"),
+        new BoxContent("C"),
+        new BoxContent("D"),
+        new BoxContent("D"),
+        new BoxContent("I"),
+        new BoxContent("I"),
+      ])
+    );
+    setLevel(2);
+  } else if (isNext && level == 2) {
+    setInitialBoxes(
+      fisherYatesShuffle([
+        new BoxContent("A"),
+        new BoxContent("B"),
+        new BoxContent("A"),
+        new BoxContent("C"),
+        new BoxContent("B"),
+        new BoxContent("C"),
+        new BoxContent("A"),
+        new BoxContent("B"),
+        new BoxContent("A"),
+        new BoxContent("C"),
+        new BoxContent("B"),
+        new BoxContent("C"),
+        new BoxContent("K"),
+        new BoxContent("K"),
+        new BoxContent("G"),
+        new BoxContent("K"),
+        new BoxContent("K"),
+        new BoxContent("E"),
+        new BoxContent("G"),
+        new BoxContent("E"),
+      ])
+    );
+    setLevel(3);
+  } else if (isNext && level == 3) {
+    setLevel(4);
+  }
 
   return (
     <>
@@ -141,6 +159,7 @@ export function MediumLevel({ navigation }) {
         }}
       >
         <Text style={styles.scoreText}>Score: {points}</Text>
+        <Text style={{ alignSelf: "center" }}>Time: {timeEnd}</Text>
       </View>
       <View style={styles.container}>
         {initialBoxes.map((item, index) => (
@@ -157,7 +176,7 @@ export function MediumLevel({ navigation }) {
 }
 
 function Box(props) {
-  const { value, isSelected, isDead, onClick,link } = props;
+  const { value, isSelected, isDead, onClick, link } = props;
 
   return (
     <TouchableOpacity onPress={onClick} disabled={isSelected}>
@@ -194,7 +213,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   selectedBox: {
-    backgroundColor: "gray",
+    borderColor: "red",
+    borderWidth: 2,
   },
   scoreText: {
     fontSize: 50,

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
 import { ScreenEnd } from "./ScreenEnd";
-import {arrayImage, fisherYatesShuffle} from './util'
+import { arrayImage, fisherYatesShuffle } from "./util";
 const POINTS_PER_MATCH = 10;
 
 class BoxContent {
@@ -24,28 +24,30 @@ export function HardLevel({ navigation }) {
     return null;
   }
 
-  const [initialBoxes, setInitialBoxes] = useState(fisherYatesShuffle([
-    new BoxContent("A"),
-    new BoxContent("B"),
-    new BoxContent("A"),
-    new BoxContent("C"),
-    new BoxContent("B"),
-    new BoxContent("C"),
-    new BoxContent("A"),
-    new BoxContent("B"),
-    new BoxContent("A"),
-    new BoxContent("C"),
-    new BoxContent("B"),
-    new BoxContent("C"),
-    new BoxContent("K"),
-    new BoxContent("K"),
-    new BoxContent("G"),
-    new BoxContent("K"),
-    new BoxContent("K"),
-    new BoxContent("E"),
-    new BoxContent("G"),
-    new BoxContent("E"),
-  ]));
+  const [initialBoxes, setInitialBoxes] = useState(
+    fisherYatesShuffle([
+      new BoxContent("A"),
+      new BoxContent("B"),
+      new BoxContent("A"),
+      new BoxContent("C"),
+      new BoxContent("B"),
+      new BoxContent("C"),
+      new BoxContent("A"),
+      new BoxContent("B"),
+      new BoxContent("A"),
+      new BoxContent("C"),
+      new BoxContent("B"),
+      new BoxContent("C"),
+      new BoxContent("K"),
+      new BoxContent("K"),
+      new BoxContent("G"),
+      new BoxContent("K"),
+      new BoxContent("K"),
+      new BoxContent("E"),
+      new BoxContent("G"),
+      new BoxContent("E"),
+    ])
+  );
   const [selectedBoxIndex, setSelectedBoxIndex] = useState(null);
   const [points, setPoints] = useState(0);
   const onClick = (index) => {
@@ -71,67 +73,82 @@ export function HardLevel({ navigation }) {
     setInitialBoxes(newBoxes);
   };
 
-const [level, setLevel] = useState(1);
-const isNext = initialBoxes.every((item) => item.isDead);
+  const [level, setLevel] = useState(1);
+  const isNext = initialBoxes.every((item) => item.isDead);
 
+  const [timeEnd, setTimeEnd] = useState(20);
+  useEffect(() => {
+    const countdown = setInterval(() => {
+      setTimeEnd((prevTime) => prevTime - 1);
+    }, 1000);
 
+    if (timeEnd < 1) {
+      clearInterval(countdown);
+      navigation.navigate("ScreenEnd", { points: points, time: timeEnd });
+    }
 
+    return () => clearInterval(countdown);
+  }, [timeEnd]);
 
   useEffect(() => {
     if (level == 4) {
-    return navigation.navigate("ScreenEnd", { points: points });}
+      return navigation.navigate("ScreenEnd", {
+        points: points,
+        time: timeEnd,
+      });
+    }
   }, [level]);
-if (isNext && level == 1) {
-  setInitialBoxes(
-    fisherYatesShuffle([
-      new BoxContent("A"),
-      new BoxContent("B"),
-      new BoxContent("A"),
-      new BoxContent("C"),
-      new BoxContent("B"),
-      new BoxContent("C"),
-      new BoxContent("A"),
-      new BoxContent("B"),
-      new BoxContent("A"),
-      new BoxContent("C"),
-      new BoxContent("B"),
-      new BoxContent("C"),
-      new BoxContent("D"),
-      new BoxContent("D"),
-      new BoxContent("I"),
-      new BoxContent("I"),
-    ])
-  );
-  setLevel(2);
-} else if (isNext && level == 2) {
-  setInitialBoxes(
-    fisherYatesShuffle([
-      new BoxContent("A"),
-      new BoxContent("B"),
-      new BoxContent("A"),
-      new BoxContent("C"),
-      new BoxContent("B"),
-      new BoxContent("C"),
-      new BoxContent("A"),
-      new BoxContent("B"),
-      new BoxContent("A"),
-      new BoxContent("C"),
-      new BoxContent("B"),
-      new BoxContent("C"),
-      new BoxContent("K"),
-      new BoxContent("K"),
-      new BoxContent("G"),
-      new BoxContent("K"),
-      new BoxContent("K"),
-      new BoxContent("E"),
-      new BoxContent("G"),
-      new BoxContent("E"),
-    ])
-  );
-  setLevel(3);
-} else if (isNext && level == 3) {
-  setLevel(4);
-}
+  if (isNext && level == 1) {
+    setInitialBoxes(
+      fisherYatesShuffle([
+        new BoxContent("A"),
+        new BoxContent("B"),
+        new BoxContent("A"),
+        new BoxContent("C"),
+        new BoxContent("B"),
+        new BoxContent("C"),
+        new BoxContent("A"),
+        new BoxContent("B"),
+        new BoxContent("A"),
+        new BoxContent("C"),
+        new BoxContent("B"),
+        new BoxContent("C"),
+        new BoxContent("D"),
+        new BoxContent("D"),
+        new BoxContent("I"),
+        new BoxContent("I"),
+      ])
+    );
+    setLevel(2);
+  } else if (isNext && level == 2) {
+    setInitialBoxes(
+      fisherYatesShuffle([
+        new BoxContent("A"),
+        new BoxContent("B"),
+        new BoxContent("A"),
+        new BoxContent("C"),
+        new BoxContent("B"),
+        new BoxContent("C"),
+        new BoxContent("A"),
+        new BoxContent("B"),
+        new BoxContent("A"),
+        new BoxContent("C"),
+        new BoxContent("B"),
+        new BoxContent("C"),
+        new BoxContent("K"),
+        new BoxContent("K"),
+        new BoxContent("G"),
+        new BoxContent("K"),
+        new BoxContent("K"),
+        new BoxContent("E"),
+        new BoxContent("G"),
+        new BoxContent("E"),
+      ])
+    );
+    setLevel(3);
+  } else if (isNext && level == 3) {
+    setLevel(4);
+  }
   return (
     <>
       <View
@@ -143,6 +160,7 @@ if (isNext && level == 1) {
         }}
       >
         <Text style={styles.scoreText}>Score: {points}</Text>
+        <Text style={{ alignSelf: "center" }}>Time: {timeEnd}</Text>
       </View>
 
       <View style={styles.container}>
@@ -197,7 +215,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   selectedBox: {
-    backgroundColor: "gray",
+    borderColor: "red",
+    borderWidth: 2,
   },
   scoreText: {
     fontSize: 50,

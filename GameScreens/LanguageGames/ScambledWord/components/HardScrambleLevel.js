@@ -8,7 +8,7 @@ import {
   SafeAreaView,
   Box,
 } from "react-native";
-
+import GameTopBar from "../../../../components/GameTopBar";
 const wordsData = [
   {
     word: "square",
@@ -28,13 +28,13 @@ class BoxContent {
   }
 }
 
-export const HardScrambleLevel = ({ navigation }) => {
-  const [currentWord, setCurrentWord] = useState("");
+export const HardScrambleLevel = ({ navigation, navigation: { goBack } }) => {
+  const [currentWord, setCurrentWord] = useState("a");
   const [shuffledWord, setShuffledWord] = useState("");
   const [selectedLetters, setSelectedLetters] = useState([]);
   const [orderedSelectedLetters, setOrderedSelectedLetters] = useState([]);
   const [remainingWords, setRemainingWords] = useState([...wordsData]);
-  const [score, setScore] = useState(-100);
+  const [score, setScore] = useState(0);
   const [initialBoxes, setInitialBoxes] = useState([]);
 
   const shuffleLetters = (letters) => {
@@ -69,7 +69,10 @@ export const HardScrambleLevel = ({ navigation }) => {
       // setSelectedLetters([]);
       // setOrderedSelectedLetters([]);
     } else {
-      navigation.navigate("ScreenEndScrambledWords", { score: score });
+      navigation.navigate("ScreenEndScrambledWords", {
+        score: score,
+        time: timeEnd,
+      });
     }
   };
 
@@ -102,8 +105,23 @@ export const HardScrambleLevel = ({ navigation }) => {
     item.isReturn = false;
   };
 
+    const [timeEnd, setTimeEnd] = useState(60);
+    useEffect(() => {
+      const countdown = setInterval(() => {
+        setTimeEnd((prevTime) => prevTime - 1);
+      }, 1000);
+
+      if (timeEnd < 1) {
+        clearInterval(countdown);
+        navigation.navigate("ScreenEnd", { score: score, time: timeEnd });
+      }
+
+      return () => clearInterval(countdown);
+    }, [timeEnd]);
+
   return (
     <SafeAreaView>
+      <GameTopBar goBack={goBack} />
       <View
         style={{
           height: 150,
@@ -114,6 +132,7 @@ export const HardScrambleLevel = ({ navigation }) => {
         }}
       >
         <Text style={styles.scoreText}> Score: {score}</Text>
+        <Text style={{ alignSelf: "center" }}>Time: {timeEnd}</Text>
       </View>
       <View style={styles.container}>
         <View style={styles.wordContainer}>

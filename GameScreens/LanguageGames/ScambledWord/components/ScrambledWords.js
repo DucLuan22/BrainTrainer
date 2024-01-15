@@ -6,12 +6,10 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import GameTopBar from "../../../../components/GameTopBar";
 
-export default function ScrambledWords({ navigation, navigation: { goBack } }) {
+export default function ScrambledWords({ navigation}) {
   return (
     <SafeAreaView style={styles.container}>
-      <GameTopBar goBack={goBack} />
       <View style={{ paddingTop: 50 }}>
         <Text style={styles.titleText}> Level</Text>
       </View>

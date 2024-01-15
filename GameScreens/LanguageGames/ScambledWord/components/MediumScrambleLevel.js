@@ -8,7 +8,7 @@ import {
   SafeAreaView,
   Box,
 } from "react-native";
-
+import GameTopBar from "../../../../components/GameTopBar";
 const wordsData = [
   {
     word: "addition",
@@ -100,13 +100,13 @@ class BoxContent {
   }
 }
 
-export const MediumScrambleLevel = ({ navigation }) => {
-  const [currentWord, setCurrentWord] = useState("");
+export const MediumScrambleLevel = ({ navigation, navigation: { goBack } }) => {
+  const [currentWord, setCurrentWord] = useState("a");
   const [shuffledWord, setShuffledWord] = useState("");
   const [selectedLetters, setSelectedLetters] = useState([]);
   const [orderedSelectedLetters, setOrderedSelectedLetters] = useState([]);
   const [remainingWords, setRemainingWords] = useState([...wordsData]);
-  const [score, setScore] = useState(-100);
+  const [score, setScore] = useState(0);
   const [initialBoxes, setInitialBoxes] = useState([]);
 
   const shuffleLetters = (letters) => {
@@ -141,10 +141,25 @@ export const MediumScrambleLevel = ({ navigation }) => {
       // setSelectedLetters([]);
       // setOrderedSelectedLetters([]);
     } else {
-      navigation.navigate("ScreenEndScrambledWords", { score: score });
+      navigation.navigate("ScreenEndScrambledWords", {
+        score: score,
+        time: timeEnd,
+      });
     }
   };
+  const [timeEnd, setTimeEnd] = useState(120);
+  useEffect(() => {
+    const countdown = setInterval(() => {
+      setTimeEnd((prevTime) => prevTime - 1);
+    }, 1000);
 
+    if (timeEnd < 1) {
+      clearInterval(countdown);
+      navigation.navigate("ScreenEnd", { score: score, time: timeEnd });
+    }
+
+    return () => clearInterval(countdown);
+  }, [timeEnd]);
   useEffect(() => {
     const checkAnswer = () => {
       const selectedWord = selectedLetters.join("");
@@ -176,6 +191,7 @@ export const MediumScrambleLevel = ({ navigation }) => {
 
   return (
     <SafeAreaView>
+      <GameTopBar goBack={goBack} />
       <View
         style={{
           height: 150,
@@ -186,6 +202,7 @@ export const MediumScrambleLevel = ({ navigation }) => {
         }}
       >
         <Text style={styles.scoreText}> Score: {score}</Text>
+        <Text style={{ alignSelf: "center" }}>Time: {timeEnd}</Text>
       </View>
       <View style={styles.container}>
         <View style={styles.wordContainer}>

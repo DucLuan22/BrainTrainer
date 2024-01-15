@@ -5,10 +5,11 @@ import {
   TouchableOpacity,
   FlatList,
   StyleSheet,
-  SafeAreaView,
   Box,
+  Pressable,
 } from "react-native";
-
+import { SafeAreaView } from "react-native-safe-area-context";
+import GameTopBar from "../../../../components/GameTopBar";
 const wordsData = [
   {
     word: "addition",
@@ -46,6 +47,10 @@ const wordsData = [
     word: "denominator",
     hint: "The bottom part of a fraction representing the total number of equal parts",
   },
+  {
+    word: "remainder",
+    hint: "The amount left over after dividing one number by another, often expressed as 'X remainder Y.'",
+  },
 ];
 
 class BoxContent {
@@ -56,7 +61,7 @@ class BoxContent {
   }
 }
 
-export const EasyScrambleLevel = ({ navigation }) => {
+export const EasyScrambleLevel = ({ navigation, navigation: { goBack } }) => {
   const [currentWord, setCurrentWord] = useState("a");
   const [shuffledWord, setShuffledWord] = useState("");
   const [selectedLetters, setSelectedLetters] = useState([]);
@@ -72,6 +77,10 @@ export const EasyScrambleLevel = ({ navigation }) => {
     }
     return letters;
   };
+
+  useEffect(() => {
+    setTimeEnd(20);
+  }, [score]);
 
   const stringToBoxContentArray = (inputString) => {
     return inputString.split("").map((char) => new BoxContent(char));
@@ -97,9 +106,25 @@ export const EasyScrambleLevel = ({ navigation }) => {
       // setSelectedLetters([]);
       // setOrderedSelectedLetters([]);
     } else {
-      navigation.navigate("ScreenEndScrambledWords", { score: score });
+      navigation.navigate("ScreenEndScrambledWords", {
+        score: score,
+        time: timeEnd,
+      });
     }
   };
+  const [timeEnd, setTimeEnd] = useState(20);
+  useEffect(() => {
+    const countdown = setInterval(() => {
+      setTimeEnd((prevTime) => prevTime - 1);
+    }, 1000);
+
+    if (timeEnd < 1) {
+      clearInterval(countdown);
+      navigation.navigate("ScreenEnd", { score: score, time: timeEnd });
+    }
+
+    return () => clearInterval(countdown);
+  }, [timeEnd]);
 
   useEffect(() => {
     const checkAnswer = () => {
@@ -130,8 +155,12 @@ export const EasyScrambleLevel = ({ navigation }) => {
     item.isReturn = false;
   };
 
+  const handleRemoveLetter = (index) => {
+    console.log([...orderedSelectedLetters.splice(index)]);
+  };
   return (
     <SafeAreaView>
+      <GameTopBar goBack={goBack} />
       <View
         style={{
           height: 150,
@@ -142,19 +171,22 @@ export const EasyScrambleLevel = ({ navigation }) => {
         }}
       >
         <Text style={styles.scoreText}> Score: {score}</Text>
+        <Text style={{ alignSelf: "center" }}>Time: {timeEnd}</Text>
       </View>
       <View style={styles.container}>
         <View style={styles.wordContainer}>
           {initialBoxes.map((item, index) => (
-            <Text
-              key={index}
-              style={[
-                styles.wordText,
-                orderedSelectedLetters[index] ? styles.correctLetter : null,
-              ]}
-            >
-              {orderedSelectedLetters[index] || "_"}
-            </Text>
+            <Pressable>
+              <Text
+                key={index}
+                style={[
+                  styles.wordText,
+                  orderedSelectedLetters[index] ? styles.correctLetter : null,
+                ]}
+              >
+                {orderedSelectedLetters[index] || "_"}
+              </Text>
+            </Pressable>
           ))}
         </View>
       </View>

@@ -10,7 +10,7 @@ export default function FindTheNextWord({
   navigation,
 }) {
   const [randomIndex, setRandomIndex] = useState(0);
-  const wordList = ["beg", "mag", "spi", "col"];
+  const wordList = ["s", "z", "b", "q"];
   const [currentWord, setCurrentWord] = useState(wordList[0]);
   const [chosenword, setChosen] = useState([]);
   const [nextWord, setNextWord] = useState("");
@@ -45,7 +45,11 @@ export default function FindTheNextWord({
     } else if (isCorrect) {
       setChosen([...chosenword, currentWord + nextWord]);
       setFeedback("Correct! The word is in the list.");
+
       setScore(score + 200);
+
+      setTimeEnd(30);
+      // setScore(score + 100);
     } else {
       setFeedback("Incorrect. The word is not in the list.");
     }
@@ -71,7 +75,7 @@ export default function FindTheNextWord({
 
     if (timeEnd < 1) {
       clearInterval(countdown);
-      navigation.navigate("ScreenEnd", { points: score });
+      navigation.navigate("ScreenEnd", { points: score, time: timeEnd });
     }
 
     return () => clearInterval(countdown); // Cleanup on component unmount

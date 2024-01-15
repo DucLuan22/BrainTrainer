@@ -13,7 +13,7 @@ export default function MatchingPair({ navigation, navigation: { goBack } }) {
     <SafeAreaView style={styles.container}>
       <View style={{ alignItems: "center" }}>
         <View style={{ paddingTop: 50 }}>
-          <Text style={styles.titleText}> CẤP ĐỘ</Text>
+          <Text style={styles.titleText}> Difficulty LeveLs</Text>
         </View>
         <View>
           <Image style={styles.box} source={require("../assets/avatar.png")} />
